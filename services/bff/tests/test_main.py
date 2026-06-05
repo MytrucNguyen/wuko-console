@@ -2,6 +2,7 @@ import os
 import pytest
 import respx
 from httpx import Response
+import httpx
 from dotenv import load_dotenv
 
 from fastapi.testclient import TestClient
@@ -14,7 +15,7 @@ client = TestClient(app)
 DEVICE_SERVICE_URL = os.getenv("DEVICE_SERVICE_URL")
 
 @respx.mock
-def test_list_devices_return_from_device_services():
+def test_list_devices_returns_from_device_services():
     device_service_route = respx.get(f"{DEVICE_SERVICE_URL}/devices").mock(
         return_value=Response(
             200,
@@ -40,3 +41,16 @@ def test_list_devices_return_from_device_services():
     data = response.json()
     assert len(data) == 1
     assert data[0]["id"] == "KIOSK-1"
+
+
+@respx.mock
+def test_list_devices_returns_503_when_devices_service_unavaiable():
+    device_service_route = respx.get(f"{DEVICE_SERVICE_URL}/devices").mock(
+        side_effect=httpx.ConnectError("Connection refuse")
+    )
+
+    response = client.get("/devices")
+
+    assert response.status_code == 503
+    assert device_service_route.called
+    assert response.json() == {"detail": "Device service unavailable"}
