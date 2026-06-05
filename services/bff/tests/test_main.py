@@ -44,9 +44,9 @@ def test_list_devices_returns_from_device_services():
 
 
 @respx.mock
-def test_list_devices_returns_503_when_devices_service_unavaiable():
+def test_list_devices_returns_503_when_device_service_unavailable():
     device_service_route = respx.get(f"{DEVICE_SERVICE_URL}/devices").mock(
-        side_effect=httpx.ConnectError("Connection refuse")
+        side_effect=httpx.ConnectError("Connection refused")
     )
 
     response = client.get("/devices")
