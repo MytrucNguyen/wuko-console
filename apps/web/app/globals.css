@@ -111,6 +111,8 @@
   --wuko-success-fg: #047857;
   --wuko-warning-fg: #92400e;
   --wuko-gold: #d4a017;
+  --wuko-grid-glow: rgba(20, 184, 166, 0.14);
+  --wuko-grid-line: rgba(226, 232, 240, 0.5);
 }
 
 .dark {
@@ -160,6 +162,8 @@
   --wuko-success-fg: #10b981;
   --wuko-warning-fg: #f59e0b;
   --wuko-gold: #d4a017;
+  --wuko-grid-glow: rgba(94, 234, 212, 0.18);
+  --wuko-grid-line: rgba(51, 65, 85, 0.15);
 }
 
 @layer base {
@@ -176,8 +180,12 @@
 
 .grid-bg {
   background-image:
-    linear-gradient(to right, color-mix(in srgb, var(--wuko-border) 12%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in srgb, var(--wuko-border) 12%, transparent) 1px, transparent 1px);
-  background-size: 48px 48px;
+    radial-gradient(ellipse 80% 50% at 50% -10%, var(--wuko-grid-glow), transparent 60%),
+    linear-gradient(to right, var(--wuko-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--wuko-grid-line) 1px, transparent 1px);
+  background-size: auto, 56px 56px, 56px 56px;
+  background-position: center top, center, center;
   background-color: var(--wuko-bg);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
 }
