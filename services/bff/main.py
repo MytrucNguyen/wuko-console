@@ -25,7 +25,6 @@ async def list_devices():
             )
 
 
-
 @app.get("/devices/{device_id}")
 async def get_device(device_id: str):
     async with httpx.AsyncClient() as client:
