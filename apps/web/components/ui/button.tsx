@@ -1,5 +1,6 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
+import { Slot } from "@radix-ui/react-slot";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center font-semibold whitespace-nowrap select-none transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wuko-accent disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none",
@@ -14,8 +15,8 @@ const buttonVariants = cva(
           "bg-transparent text-wuko-heading border border-wuko-border hover:bg-wuko-card hover:border-wuko-text-muted",
         ghost:
           "bg-transparent text-wuko-text hover:bg-wuko-card/60 hover:text-wuko-heading",
-        danger:
-          "bg-wuko-danger text-white hover:bg-wuko-danger-hover",
+        danger: "bg-wuko-danger text-white hover:bg-wuko-danger-hover",
+        link: "bg-transparent text-wuko-accent underline-offset-4 hover:underline hover:text-wuko-accent-hover",
       },
       size: {
         sm: "h-8 px-3 text-[13px] gap-1.5 rounded-md",
@@ -31,12 +32,10 @@ const buttonVariants = cva(
       variant: "primary",
       size: "md",
     },
-  }
+  },
 );
 
-function cn(
-  ...classes: Array<string | false | null | undefined>
-): string {
+function cn(...classes: Array<string | false | null | undefined>): string {
   return classes.filter(Boolean).join(" ");
 }
 
@@ -48,9 +47,11 @@ export type ButtonSize = NonNullable<
 >;
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   loading?: boolean;
+  asChild?: boolean;
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -60,18 +61,20 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       size = "md",
       loading = false,
       disabled = false,
+      asChild = false,
       className,
       children,
       type = "button",
       ...props
     },
-    ref
+    ref,
   ) => {
     const isDisabled = disabled || loading;
+    const Comp = asChild ? Slot : "button";
     return (
-      <button
+      <Comp
         ref={ref}
-        type={type}
+        type={asChild ? undefined : type}
         disabled={isDisabled}
         aria-busy={loading || undefined}
         className={cn(buttonVariants({ variant, size }), className)}
@@ -103,9 +106,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           </svg>
         ) : null}
         {children}
-      </button>
+      </Comp>
     );
-  }
+  },
 );
 Button.displayName = "Button";
 
