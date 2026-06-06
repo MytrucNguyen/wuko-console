@@ -23,3 +23,25 @@ async def list_devices():
                 status_code=503,
                 detail="Device service unavailable"
             )
+
+
+
+@app.get("/devices/{device_id}")
+async def get_device(device_id: str):
+    async with httpx.AsyncClient() as client:
+        try:
+            response = await client.get(f"{DEVICE_SERVICE_URL}/devices/{device_id}")
+
+            if response.status_code == 404:
+                raise HTTPException(
+                    status_code=404,
+                    detail="Device not found"
+                ) 
+
+            return response.json()
+
+        except httpx.ConnectError:
+            raise HTTPException(
+                status_code=503,
+                detail="Device service unavailable"
+            )
