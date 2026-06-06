@@ -1,9 +1,5 @@
-import { Placeholder } from "@/components/ui/placeholder";
+import { Login } from "@/app/(auth)/_components/login";
 
 export default function Home() {
-  return (
-    <main className="flex min-h-screen items-center justify-center p-8">
-      <Placeholder label="Wuko Console" />
-    </main>
-  );
+  return <Login />;
 }
