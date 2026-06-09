@@ -64,7 +64,7 @@ export function Login() {
         <Badge variant="warning">● Demo mode · no real authentication</Badge>
 
         {/* Version footer */}
-        <p className="font-mono text-xs text-wuko-text-muted">v4.13.0</p>
+        <p className="font-mono text-xs text-wuko-text-muted">v0.1.0</p>
       </div>
     </main>
   );

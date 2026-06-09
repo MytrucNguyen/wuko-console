@@ -18,7 +18,7 @@ export const PERSONAS = [
     description:
       "All regions • restart & update devices • view audit log • manage policies",
     badge: "full access",
-    href: "",
+    href: "/fleet?persona=admin",
   },
   {
     id: "operator",
@@ -27,7 +27,7 @@ export const PERSONAS = [
     description:
       "Assigned region only • restart & update devices • acknowledge alerts",
     badge: undefined,
-    href: "",
+    href: "/fleet?persona=operator",
   },
   {
     id: "viewer",
@@ -35,6 +35,6 @@ export const PERSONAS = [
     icon: Eye,
     description: "Assigned region only • read-only • cannot take any actions",
     badge: undefined,
-    href: "",
+    href: "/fleet?persona=viewer",
   },
 ] as const satisfies readonly Persona[];
