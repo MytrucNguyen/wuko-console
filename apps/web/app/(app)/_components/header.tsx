@@ -11,7 +11,6 @@ const PAGE_NAMES: Record<string, string> = {
   "/fleet": "Fleet",
   "/alerts": "Alerts",
   "/audit-log": "Audit log",
-  "/settings": "Settings",
 };
 
 function EnvironmentChip() {

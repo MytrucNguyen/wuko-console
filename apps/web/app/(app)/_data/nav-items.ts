@@ -28,10 +28,4 @@ export const NAV_ITEMS: NavItem[] = [
     icon: FileText,
     requiresPermission: "canViewAuditLog",
   },
-  {
-    label: "Settings",
-    href: "/settings",
-    icon: Settings,
-    requiresPermission: "canViewSettings",
-  },
 ];
