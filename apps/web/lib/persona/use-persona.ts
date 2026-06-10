@@ -13,6 +13,8 @@ export type PersonaConfig = {
     canUpdateFirmware: boolean;
     canViewAuditLog: boolean;
     canManagePolicies: boolean;
+    canViewSettings: boolean;
+    canViewAlerts: boolean;
   };
 };
 
@@ -25,6 +27,8 @@ const PERSONA_CONFIG: Record<PersonaId, PersonaConfig> = {
       canUpdateFirmware: true,
       canViewAuditLog: true,
       canManagePolicies: true,
+      canViewSettings: true,
+      canViewAlerts: true,
     },
   },
   operator: {
@@ -35,6 +39,8 @@ const PERSONA_CONFIG: Record<PersonaId, PersonaConfig> = {
       canUpdateFirmware: true,
       canViewAuditLog: false,
       canManagePolicies: false,
+      canViewSettings: false,
+      canViewAlerts: true,
     },
   },
   viewer: {
@@ -45,6 +51,8 @@ const PERSONA_CONFIG: Record<PersonaId, PersonaConfig> = {
       canUpdateFirmware: false,
       canViewAuditLog: false,
       canManagePolicies: false,
+      canViewSettings: false,
+      canViewAlerts: false,
     },
   },
 };
