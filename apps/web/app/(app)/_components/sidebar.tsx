@@ -1,13 +1,23 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { usePersona } from "@/lib/persona/use-persona";
+import { getAlerts } from "@/services/alerts";
 
 import { NAV_ITEMS, type NavItem } from "../_data/nav-items";
 
-function NavLink({ item, isActive }: { item: NavItem; isActive: boolean }) {
+function NavLink({
+  item,
+  isActive,
+  badge,
+}: {
+  item: NavItem;
+  isActive: boolean;
+  badge?: number;
+}) {
   const Icon = item.icon;
 
   return (
@@ -25,9 +35,9 @@ function NavLink({ item, isActive }: { item: NavItem; isActive: boolean }) {
         }`}
       />
       <span className="flex-1">{item.label}</span>
-      {item.badge !== undefined && (
+      {badge !== undefined && badge > 0 && (
         <span className="rounded-full bg-wuko-card px-2 py-0.5 text-xs text-wuko-text-muted">
-          {item.badge}
+          {badge}
         </span>
       )}
     </Link>
@@ -37,6 +47,15 @@ function NavLink({ item, isActive }: { item: NavItem; isActive: boolean }) {
 export function Sidebar() {
   const pathname = usePathname();
   const persona = usePersona();
+
+  const { data: alerts } = useQuery({
+    queryKey: ["alerts"],
+    queryFn: getAlerts,
+    enabled: persona.permissions.canViewAlerts,
+  });
+
+  const activeAlertCount =
+    alerts?.filter((a) => a.status === "active").length ?? 0;
 
   const visibleItems = NAV_ITEMS.filter((item) => {
     if (!item.requiresPermission) return true;
@@ -54,6 +73,11 @@ export function Sidebar() {
             key={item.href}
             item={item}
             isActive={pathname === item.href}
+            badge={
+              item.href === "/alerts" && alerts !== undefined
+                ? activeAlertCount
+                : undefined
+            }
           />
         ))}
       </nav>

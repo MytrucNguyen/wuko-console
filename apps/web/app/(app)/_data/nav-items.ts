@@ -8,7 +8,6 @@ export type NavItem = {
   href: string;
   icon: LucideIcon;
   requiresPermission?: keyof PersonaConfig["permissions"];
-  badge?: number;
 };
 
 export const NAV_ITEMS: NavItem[] = [
@@ -22,7 +21,6 @@ export const NAV_ITEMS: NavItem[] = [
     href: "/alerts",
     icon: Bell,
     requiresPermission: "canViewAlerts",
-    badge: 17,
   },
   {
     label: "Audit log",
