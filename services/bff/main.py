@@ -11,10 +11,17 @@ from mocks.alerts import get_alerts, acknowledge_alert, dismiss_alert
 
 load_dotenv()
 
+ALLOWED_ORIGINS_RAW = os.getenv("ALLOWED_ORIGINS")
+if not ALLOWED_ORIGINS_RAW:
+    raise RuntimeError(
+        "ALLOWED_ORIGINS env var is required (comma-separated list of origins)"
+    )
+ALLOWED_ORIGINS = ALLOWED_ORIGINS_RAW.split(",")
+
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
