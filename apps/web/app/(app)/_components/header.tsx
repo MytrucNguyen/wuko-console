@@ -4,6 +4,9 @@ import { usePathname } from "next/navigation";
 import Mascot from "@/components/brand/mascot";
 import { ThemeToggle } from "@/components/theme-toggle";
 
+import { HealthChip } from "./health-chip";
+import { ProfileMenu } from "./profile-menu";
+
 const PAGE_NAMES: Record<string, string> = {
   "/fleet": "Fleet",
   "/alerts": "Alerts",
@@ -53,8 +56,10 @@ export function Header() {
         {pageName.toLowerCase()}
       </span>
 
-      <div className="ml-auto">
+      <div className="ml-auto flex items-center gap-3">
+        <HealthChip />
         <ThemeToggle />
+        <ProfileMenu />
       </div>
     </header>
   );
