@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Slot } from "@radix-ui/react-slot";
+import { twMerge } from "tailwind-merge";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center font-semibold whitespace-nowrap select-none transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wuko-accent disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none",
@@ -35,8 +36,9 @@ const buttonVariants = cva(
   },
 );
 
+
 function cn(...classes: Array<string | false | null | undefined>): string {
-  return classes.filter(Boolean).join(" ");
+  return twMerge(classes.filter(Boolean).join(" "));
 }
 
 export type ButtonVariant = NonNullable<
