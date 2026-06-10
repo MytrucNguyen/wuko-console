@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, HTTPException
 from dotenv import load_dotenv
 
+from mocks.audit_log import get_audit_log
 
 
 load_dotenv()
@@ -54,3 +55,8 @@ async def get_device(device_id: str):
                 status_code=503,
                 detail="Device service unavailable"
             )
+        
+        
+@app.get("/audit-log")
+async def list_audit_log():
+    return get_audit_log()
