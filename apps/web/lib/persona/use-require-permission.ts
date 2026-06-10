@@ -3,6 +3,7 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 
+import { useIsHydrated } from "./use-is-hydrated";
 import { usePersona, type PersonaConfig } from "./use-persona";
 
 export function useRequirePermission(
@@ -11,13 +12,14 @@ export function useRequirePermission(
 ) {
   const router = useRouter();
   const persona = usePersona();
+  const isHydrated = useIsHydrated();
   const allowed = persona.permissions[permission];
 
   React.useEffect(() => {
-    if (!allowed) {
+    if (isHydrated && !allowed) {
       router.replace(redirectTo);
     }
-  }, [allowed, redirectTo, router]);
+  }, [isHydrated, allowed, redirectTo, router]);
 
   return allowed;
 }

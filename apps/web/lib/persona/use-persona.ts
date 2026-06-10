@@ -67,20 +67,27 @@ export function usePersona(): PersonaConfig {
   const searchParams = useSearchParams();
   const urlPersona = searchParams.get("persona");
 
-  const personaId = React.useMemo<PersonaId>(() => {
-    if (isPersonaId(urlPersona)) return urlPersona;
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (isPersonaId(stored)) return stored;
+  const [storedPersona, setStoredPersona] = React.useState<PersonaId | null>(
+    null,
+  );
+
+  React.useEffect(() => {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (isPersonaId(stored)) {
+      setStoredPersona(stored);
     }
-    return "viewer";
-  }, [urlPersona]);
+  }, []);
 
   React.useEffect(() => {
     if (isPersonaId(urlPersona)) {
       localStorage.setItem(STORAGE_KEY, urlPersona);
+      setStoredPersona(urlPersona);
     }
   }, [urlPersona]);
+
+  const personaId: PersonaId = isPersonaId(urlPersona)
+    ? urlPersona
+    : storedPersona ?? "viewer";
 
   return PERSONA_CONFIG[personaId];
 }
