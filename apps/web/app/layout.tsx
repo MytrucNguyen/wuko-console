@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { ConditionalThemeToggle } from "@/components/conditional-theme-toggle";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { QueryProvider } from "@/components/providers/query-provider";
 
@@ -42,9 +42,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <QueryProvider>
-            <div className="absolute top-4 right-4 z-10">
-              <ThemeToggle />
-            </div>
+            <ConditionalThemeToggle />
             {children}
           </QueryProvider>
         </ThemeProvider>
