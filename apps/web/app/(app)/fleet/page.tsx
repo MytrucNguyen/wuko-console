@@ -9,6 +9,8 @@ import { getDevices } from "@/services/devices";
 import { columns } from "./_components/columns";
 import { TableSkeleton } from "../_components/table-skeleton";
 
+export const dynamic = "force-dynamic";
+
 export default function FleetPage() {
   const persona = usePersona();
   const { data, isLoading, error } = useQuery({
