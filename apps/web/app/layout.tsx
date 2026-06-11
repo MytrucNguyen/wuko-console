@@ -23,6 +23,8 @@ export const metadata: Metadata = {
   description: "Operations console for managing a fleet of retail kiosks.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default function RootLayout({
   children,
 }: Readonly<{
