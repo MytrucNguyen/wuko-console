@@ -8,6 +8,7 @@ import { getAuditLog } from "@/services/audit";
 
 import { EventSection, groupEventsByDay } from "./_components/event-section";
 import { FilterBar } from "./_components/filter-bar";
+import { TimelineSkeleton } from "../_components/timeline-skeleton";
 
 export default function AuditLogPage() {
   const allowed = useRequirePermission("canViewAuditLog");
@@ -22,13 +23,8 @@ export default function AuditLogPage() {
   if (!allowed) return null;
 
   if (isLoading) {
-    return (
-      <main className="p-8 text-wuko-text">
-        <p>Loading audit log...</p>
-      </main>
-    );
+    return <TimelineSkeleton />;
   }
-
   if (error) {
     return (
       <main className="p-8 text-wuko-danger-fg">

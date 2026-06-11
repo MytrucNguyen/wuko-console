@@ -7,6 +7,7 @@ import { useRequirePermission } from "@/lib/persona/use-require-permission";
 import { getAlerts } from "@/services/alerts";
 
 import { columns } from "./_components/columns";
+import { TableSkeleton } from "../_components/table-skeleton";
 
 export default function AlertsPage() {
   const allowed = useRequirePermission("canViewAlerts");
@@ -18,11 +19,7 @@ export default function AlertsPage() {
   if (!allowed) return null;
 
   if (isLoading) {
-    return (
-      <main className="p-8 text-wuko-text">
-        <p>Loading alerts...</p>
-      </main>
-    );
+    return <TableSkeleton columnCount={7} />;
   }
 
   if (error) {
@@ -40,7 +37,8 @@ export default function AlertsPage() {
       <header className="mb-6">
         <h1 className="text-2xl font-semibold text-wuko-heading">Alerts</h1>
         <p className="text-sm text-wuko-text-muted">
-          {activeCount} active alert{activeCount === 1 ? "" : "s"} · {data?.length ?? 0} total
+          {activeCount} active alert{activeCount === 1 ? "" : "s"} ·{" "}
+          {data?.length ?? 0} total
         </p>
       </header>
 

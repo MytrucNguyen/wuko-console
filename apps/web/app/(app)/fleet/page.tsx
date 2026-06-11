@@ -7,6 +7,7 @@ import { usePersona } from "@/lib/persona/use-persona";
 import { getDevices } from "@/services/devices";
 
 import { columns } from "./_components/columns";
+import { TableSkeleton } from "../_components/table-skeleton";
 
 export default function FleetPage() {
   const persona = usePersona();
@@ -16,11 +17,7 @@ export default function FleetPage() {
   });
 
   if (isLoading) {
-    return (
-      <main className="p-8 text-wuko-text">
-        <p>Loading fleet...</p>
-      </main>
-    );
+    return <TableSkeleton columnCount={8} />;
   }
 
   if (error) {
